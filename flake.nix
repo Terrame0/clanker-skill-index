@@ -31,7 +31,7 @@
       skills = lib.pipe skills-file-tree [
         (sundry.vfs.dir.filter
           (path: file: sundry.vfs.path.get.name path != "requirements.nix"))
-        (lib.mapAttrs (dir: file-tree: (sundry.vfs.dir.materialize dir file-tree).drv))
+        (lib.mapAttrs (dir: file-tree: (sundry.vfs.dir.materialize "${dir}-skill" file-tree).drv))
       ];
     });
 }
