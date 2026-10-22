@@ -24,7 +24,7 @@
         (sundry.vfs.dir.collapse
           (path: file:
             pkgs.symlinkJoin {
-              name = "${lib.head path}-requirements";
+              name = "${lib.head path}-skill-requirements";
               paths = file.expr {inherit pkgs inputs;};
             }))
       ];
