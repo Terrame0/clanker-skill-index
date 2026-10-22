@@ -17,20 +17,20 @@
       inherit (pkgs) lib;
       skills-file-tree = sundry.vfs.dir.from-src ./skills;
     in {
-      packages.default = pkgs.symlinkJoin {
-        name = "skills-requirements";
-        paths = lib.pipe skills-file-tree [
-          (sundry.vfs.dir.filter
-            (path: file: sundry.vfs.path.get.name path == "requirements.nix"))
-          sundry.vfs.dir.load-nix
-          (sundry.vfs.dir.collapse
-            (path: file: file.expr {inherit pkgs inputs;}))
-          lib.concatLists
-        ];
-      };
+      requirements = lib.pipe skills-file-tree [
+        (sundry.vfs.dir.filter
+          (path: file: sundry.vfs.path.get.name path == "requirements.nix"))
+        sundry.vfs.dir.load-nix
+        (sundry.vfs.dir.collapse
+          (path: file:
+            pkgs.symlinkJoin {
+              name = "${lib.head path}-requirements";
+              paths = file.expr {inherit pkgs inputs;};
+            }))
+      ];
       skills = lib.pipe skills-file-tree [
         (sundry.vfs.dir.filter
-          (path: file: sundry.vfs.path.get.ext path != "nix"))
+          (path: file: sundry.vfs.path.get.name path != "requirements.nix"))
         (lib.mapAttrs (dir: file-tree: (sundry.vfs.dir.materialize dir file-tree).drv))
       ];
     });
