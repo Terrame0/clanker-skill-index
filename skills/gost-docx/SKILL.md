@@ -1,5 +1,5 @@
 ---
-name: gost-report
+name: gost-docx
 description: Use when writing, formatting, or converting a Russian university report — отчёт по лабораторной работе, курсовая, ВКР, ГОСТ 7.32 — into a .docx with Times New Roman 14, 1.5 spacing, margins 25/10/20/20 mm, uppercase numbered sections, titled tables and figures. Covers the pandoc markdown→docx pipeline and PlantUML / IDEF0 diagram rendering, with helper scripts for the formatting that pandoc cannot express.
 ---
 
@@ -476,7 +476,7 @@ flake, not nixpkgs.
   them drawn separately. Only external mechanisms (bottom) are merged, not the
   `produces`/`requires` internal arrows.
 - **The DSL parser uppercases the first letter of every Latin word.** Lowercase
-  Latin is accepted, but the label is normalised: `requires Навык gost-report`
+  Latin is accepted, but the label is normalised: `requires Навык gost-docx`
   renders as `Навык Gost-report`. There is no way to keep an all-lowercase Latin
   word in a figure.
 - **A noun must not contain a connective word.** The verb is identified by
