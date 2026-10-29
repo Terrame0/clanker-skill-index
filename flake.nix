@@ -19,7 +19,7 @@
     in {
       requirements = lib.pipe skills-file-tree [
         (sundry.vfs.dir.filter
-          (path: file: sundry.vfs.path.get.name path == "requirements.nix"))
+          (path: file: sundry.vfs.path.get.basename path == "requirements.nix"))
         sundry.vfs.dir.load-nix
         (sundry.vfs.dir.collapse
           (path: file:
@@ -31,7 +31,7 @@
       skills = lib.pipe skills-file-tree [
         (sundry.vfs.dir.filter
           (path: file: sundry.vfs.path.get.name path != "requirements.nix"))
-        (lib.mapAttrs (dir: file-tree: (sundry.vfs.dir.materialize "${dir}-skill" file-tree).drv))
+        (lib.mapAttrs (name: tree: (sundry.vfs.dir.materialize "${name}-skill" tree).drv))
       ];
     });
 }
